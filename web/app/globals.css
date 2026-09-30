@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "@capywitch/ui/theme.css";
 
+@source "../node_modules/@capywitch/ui/src";
+
 /* "Etiqueta": contorno grosso branco + preenchimento em degradê, inspirado em
    https://gigas.jwalves.com/notas/pequenas-etiquetas/ — stroke desenhado
    atrás do preenchimento (paint-order), preenchimento em gradiente recortado
