@@ -4,9 +4,9 @@ Run: python scripts/fetch_game_changer_ids.py
 Output: prints YAML entries ready to paste into rules/commander/2026-02.yaml
 """
 
-import httpx
 import time
-import json
+
+import httpx
 
 GAME_CHANGERS = [
     "Ad Nauseam", "Ancient Tomb", "Aura Shards", "Biorhythm",

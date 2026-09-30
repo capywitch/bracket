@@ -3,7 +3,6 @@
 from pathlib import Path
 
 import pytest
-
 from mtg_analyzer import config
 from mtg_analyzer.cli import main
 

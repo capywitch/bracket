@@ -4,7 +4,6 @@ from pathlib import Path
 
 import httpx
 import pytest
-
 from mtg_analyzer import config
 from mtg_analyzer.combos.client import CommanderSpellbookClient
 from mtg_analyzer.combos.store import ComboStore

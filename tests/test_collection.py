@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-
 from mtg_analyzer.analysis.guide import build_guide
 from mtg_analyzer.analysis.report import analyze
 from mtg_analyzer.data.collection import sync_decks

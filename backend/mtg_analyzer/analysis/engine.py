@@ -46,7 +46,7 @@ class Ruleset:
 
     @classmethod
     def load(cls, filepath: str | Path) -> "Ruleset":
-        with open(filepath, "r", encoding="utf-8") as f:
+        with open(filepath, encoding="utf-8") as f:
             data = yaml.safe_load(f)
         return cls(data)
 

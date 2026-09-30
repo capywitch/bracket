@@ -4,13 +4,13 @@ profile clock in-memory."""
 from itertools import combinations
 
 from mtg_analyzer.analysis.report import analyze
+from mtg_analyzer.cli import _find_deck_combos
 from mtg_analyzer.data.db import CardDatabase
 from mtg_analyzer.data.deck_library import load_deck_text
 from mtg_analyzer.ingest.decklist import parse_deck
 from mtg_analyzer.ingest.resolve import resolve_deck
 from mtg_analyzer.simulation.battle import build_profile, simulate_match
 from mtg_analyzer.simulation.goldfish import simulate
-from mtg_analyzer.cli import _find_deck_combos
 
 LOTR = ["Frodo and Sam", "Galadriel", "Gandalf the White", "Sauron", "Sméagol", "Tom Bombadil"]
 JACOB = ["Sauron", "Tom Bombadil", "Galadriel", "Gandalf the White", "Sméagol", "Frodo and Sam"]

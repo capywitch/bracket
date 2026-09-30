@@ -2,7 +2,6 @@ from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
-
 from mtg_analyzer.data.db import CardDatabase
 from mtg_analyzer.rules.comprehensive import parse_rules_text
 from mtg_analyzer.rules.qa import explain_card, explain_interaction, search_knowledge

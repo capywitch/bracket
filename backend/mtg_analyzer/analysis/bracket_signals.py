@@ -13,6 +13,7 @@ results affect classification — these functions only detect and explain, never
 from __future__ import annotations
 
 import re
+from typing import Literal
 
 from mtg_analyzer.combos.store import ComboStore
 from mtg_analyzer.models.assessment import Deck, DeckCard, Evidence, EvidenceSource, Signal
@@ -151,9 +152,9 @@ def combo_signal(deck: Deck, ruleset, combo_store: ComboStore | None) -> Signal 
             extra_note = ""
 
         category = "TWO_CARD_COMBO" if is_two_card else "MULTI_CARD_COMBO"
-        impact = "high" if (tag_floor is not None and tag_floor >= 4) or \
-                            (tag_floor is None and is_early_cheap) else \
-                 "low" if (tag_floor is not None and tag_floor <= 2) else "medium"
+        impact: Literal["low", "medium", "high"] = "high" if (tag_floor is not None and tag_floor >= 4) or \
+                             (tag_floor is None and is_early_cheap) else \
+                  "low" if (tag_floor is not None and tag_floor <= 2) else "medium"
         evidence.append(Evidence(
             id=f"ev-combo-{combo.id}",
             type=category.lower(),
@@ -165,7 +166,7 @@ def combo_signal(deck: Deck, ruleset, combo_store: ComboStore | None) -> Signal 
 
     explanation = f"Found {len(found.included)} complete combo(s) in the decklist (offline combo cache)."
     if max_tag_floor is None:
-        strength = "high" if any_early_cheap else "medium"
+        strength: Literal["low", "medium", "high"] = "high" if any_early_cheap else "medium"
     else:
         strength = "high" if max_tag_floor >= 4 else "medium" if max_tag_floor == 3 else "low"
     return Signal(

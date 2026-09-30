@@ -2,13 +2,13 @@
 from itertools import combinations
 
 from mtg_analyzer.analysis.report import analyze
+from mtg_analyzer.cli import _find_deck_combos
 from mtg_analyzer.data.db import CardDatabase
 from mtg_analyzer.data.deck_library import load_deck_text
 from mtg_analyzer.ingest.decklist import parse_deck
 from mtg_analyzer.ingest.resolve import resolve_deck
 from mtg_analyzer.simulation.battle import build_profile, simulate_match
 from mtg_analyzer.simulation.goldfish import simulate
-from mtg_analyzer.cli import _find_deck_combos
 
 LOTR = ["Frodo and Sam", "Galadriel", "Gandalf the White", "Sauron", "Sméagol", "Tom Bombadil"]
 GAMES = 2000
@@ -71,7 +71,7 @@ print("PER-DECK SUMMARY (averaged over the 10 pods each deck appears in)")
 print("=" * 92)
 print(f"  {'Deck':18} {'pods':>4} {'avg win%':>9} {'min':>5} {'max':>5} {'avg archenemy%':>15} {'pod wins':>9}")
 pod_win_count = {n: 0 for n in LOTR}
-for pod, by_name, winner, _ in pod_rows:
+for _pod, _by_name, winner, _ in pod_rows:
     pod_win_count[winner.name] += 1
 ranking = sorted(LOTR, key=lambda n: winrate_sum[n] / appearances[n], reverse=True)
 for n in ranking:

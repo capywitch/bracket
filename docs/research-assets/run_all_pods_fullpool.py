@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Full-pool metagame: every C(N,4) four-deck pod across ALL saved decks.
 
 Runs the naive pass and the Stage 3c/3d fictitious-play loop (mirrors

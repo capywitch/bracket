@@ -3,7 +3,6 @@ from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
-
 from mtg_analyzer.data.db import CardDatabase
 from mtg_analyzer.data.inventory_store import InventoryStore
 from mtg_analyzer.ingest.decklist import (

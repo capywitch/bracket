@@ -4,7 +4,6 @@ from pathlib import Path
 
 import httpx
 import pytest
-
 from mtg_analyzer import config
 from mtg_analyzer.data.deck_library import DeckLibrary, load_deck_text
 from mtg_analyzer.recommend.edhrec import EDHREC_JSON_BASE, EdhrecCache, EdhrecClient

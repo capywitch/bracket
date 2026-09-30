@@ -15,12 +15,12 @@ import sys
 from collections import Counter
 from collections.abc import Callable, Coroutine
 from pathlib import Path
-from typing import Any, TypeVar
+from typing import Any
 
 from mtg_analyzer import config
+from mtg_analyzer.analysis.report import analyze
 from mtg_analyzer.combos.client import CommanderSpellbookClient
 from mtg_analyzer.combos.store import ComboStore
-from mtg_analyzer.analysis.report import analyze
 from mtg_analyzer.data.bulk import BulkDataManager
 from mtg_analyzer.data.collection import export_csv, sync_decks
 from mtg_analyzer.data.db import CardDatabase
@@ -33,20 +33,19 @@ from mtg_analyzer.ingest.resolve import resolve_deck, resolve_inventory
 from mtg_analyzer.models.combo import Combo, DeckCombos
 from mtg_analyzer.models.deck import ResolvedDeck
 from mtg_analyzer.models.match_log import WIN_METHODS, LoggedGame
-from mtg_analyzer.service import AnalyzerService, is_legal_commander_card
-from mtg_analyzer.simulation.battle import build_profile, calibrate_match, simulate_match
-from mtg_analyzer.simulation.goldfish import simulate
-from mtg_analyzer.simulation.sensitivity import analyze_sensitivity
 from mtg_analyzer.models.qa import CardKnowledge
 from mtg_analyzer.rules.comprehensive import download_rules, parse_rules_text
 from mtg_analyzer.rules.qa import explain_card, explain_interaction, search_knowledge
 from mtg_analyzer.rules.store import RulesStore
+from mtg_analyzer.service import AnalyzerService, is_legal_commander_card
+from mtg_analyzer.simulation.battle import build_profile, calibrate_match, simulate_match
+from mtg_analyzer.simulation.goldfish import simulate
+from mtg_analyzer.simulation.sensitivity import analyze_sensitivity
 
 # Minimal card-name extraction for the combos CLI (the full decklist parser is Phase 2):
 # strips a leading quantity and a trailing "(SET) 123" printing suffix.
 _DECK_LINE_RE = re.compile(r"^\s*(?:\d+x?\s+)?(.+?)(?:\s+\([0-9A-Za-z]+\)\s+\S+)?\s*$")
 _SECTION_HEADERS = {"deck", "commander", "sideboard", "companion", "maybeboard"}
-T = TypeVar("T")
 
 
 def _cmd_data_refresh(args: argparse.Namespace) -> int:
@@ -128,7 +127,7 @@ def _combo_descriptions(combos: list) -> list[str]:
             for c in combos]
 
 
-def _run_network(make_coro: Callable[[], Coroutine[Any, Any, T]], default: T, label: str) -> T:
+def _run_network[T](make_coro: Callable[[], Coroutine[Any, Any, T]], default: T, label: str) -> T:
     """Run a best-effort network coroutine; on failure surface a clear note + return default."""
     try:
         return asyncio.run(make_coro())

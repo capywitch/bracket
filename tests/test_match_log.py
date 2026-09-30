@@ -5,7 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-
 from mtg_analyzer.cli import _collect_game_form, _select_indices
 from mtg_analyzer.data.match_log import MatchLog
 from mtg_analyzer.models.battle import BattleProfile

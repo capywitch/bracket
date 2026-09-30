@@ -1,5 +1,4 @@
 from fastapi.testclient import TestClient
-
 from mtg_analyzer import __version__
 from mtg_analyzer.api.app import app
 

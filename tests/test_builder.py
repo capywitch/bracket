@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-
 from mtg_analyzer.data.db import CardDatabase
 from mtg_analyzer.models.card import Card
 from mtg_analyzer.recommend.builder import LAND_TARGET, build_deck

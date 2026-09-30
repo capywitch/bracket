@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Head-to-head 1v1 matrix across all C(N,2) deck pairs over the saved-deck library
 → per-deck matchup tendencies (favored / even / careful) grouped by opponent archetype.
 Feeds the guides' 'Matchup tendencies (1v1)' section. Writes JSON next to this script.

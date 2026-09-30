@@ -12,7 +12,6 @@ from collections import defaultdict
 
 from pydantic import BaseModel
 
-
 AVAILABLE = "Available"  # location for loose cards not committed to a deck
 
 

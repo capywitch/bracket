@@ -4,7 +4,6 @@ import json
 from types import SimpleNamespace
 
 import pytest
-
 from mtg_analyzer.service import AnalyzerService, to_jsonable
 from mtg_analyzer.simulation.battle import (
     DeckMetagameStats,

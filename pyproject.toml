@@ -36,12 +36,25 @@ packages = ["backend/mtg_analyzer"]
 line-length = 100
 target-version = "py312"
 
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+# E501: codebase usa linhas longas (prosa/URLs em strings); formatter não quebra
+# strings e comentários, então fica desligada aqui.
+# B008: Depends() como default de argumento é padrão idiomático do FastAPI.
+ignore = ["E501", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+# B023: closures equity_gate/is_spoiler são definidas dentro do loop de turnos
+# mas consumidas na mesma iteração (não escapam) — falso positivo.
+"backend/mtg_analyzer/simulation/battle.py" = ["B023"]
+
 [tool.pytest.ini_options]
 pythonpath = ["backend"]
 asyncio_mode = "auto"
 
 [tool.mypy]
 mypy_path = "backend"
+files = ["backend/mtg_analyzer"]
 
 [[tool.mypy.overrides]]
 module = ["ijson.*", "scipy.*"]

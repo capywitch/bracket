@@ -1,12 +1,12 @@
 """Dump the raw goldfish/analysis signals feeding each LOTR BattleProfile to find the miscalibration."""
 from mtg_analyzer.analysis.report import analyze
+from mtg_analyzer.cli import _find_deck_combos
 from mtg_analyzer.data.db import CardDatabase
 from mtg_analyzer.data.deck_library import load_deck_text
 from mtg_analyzer.ingest.decklist import parse_deck
 from mtg_analyzer.ingest.resolve import resolve_deck
-from mtg_analyzer.simulation.battle import build_profile, _creature_count
+from mtg_analyzer.simulation.battle import _creature_count, build_profile
 from mtg_analyzer.simulation.goldfish import simulate
-from mtg_analyzer.cli import _find_deck_combos
 
 LOTR = ["Sauron", "Tom Bombadil", "Galadriel", "Gandalf the White", "Sméagol", "Frodo and Sam"]
 
