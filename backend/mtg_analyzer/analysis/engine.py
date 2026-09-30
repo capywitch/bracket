@@ -225,26 +225,36 @@ class BracketEngine:
                 # not just 3/4 like the old heuristic-only path).
                 floor = max(floor, combo_sig.bracket_floor_hint)
             else:
-                early_cheap = combo_sig.strength == "high"
-                floor = max(floor, 4 if early_cheap else 3)
+                # No authoritative tag — treat combo as suggestive, not determinative. The old
+                # MV≤3 "early/cheap" heuristic floored every 2-card low-MV combo at 4, which
+                # catches far too many casual/value combos (Jolly Balloon Man + Village
+                # Bell-Ringer, Breath of Fury + Éowyn) that are synergies, not cEDH win-cons.
+                floor = max(floor, 3)
 
         ceiling = max(ceiling, min(floor + 1, 5))
         floor = min(floor, 5)
 
         # Heuristic signals nudge the point estimate to the top of the legal range without ever
-        # expanding it themselves — they contribute, they don't determine (spec §18/§19).
+        # expanding it themselves — they contribute, they don't determine (spec §18/§19). Nudge is
+        # deliberately conservative: a single medium-strength heuristic signal (e.g. one tutor, a
+        # couple of fast-mana rocks) isn't enough on its own. At low floors (≤3) it takes **two**
+        # strong indicators; at high floors (≥4) it takes **three** — pushing a Bracket-4 deck to
+        # cEDH on heuristics alone requires overwhelming evidence, since Bracket 5 is a competitive
+        # format with distinct meta expectations (spec §3.5: no magic scoring).
         heuristic_by_category = {s.category: s for s in heuristic}
-        nudge = False
+        strong_signals = 0
         fast_mana_sig = heuristic_by_category.get("FAST_MANA")
-        if fast_mana_sig and len(fast_mana_sig.evidence) >= 2:
-            nudge = True
+        if fast_mana_sig and fast_mana_sig.strength == "high":
+            strong_signals += 1
         tutor_sig = heuristic_by_category.get("TUTOR")
         if tutor_sig and tutor_sig.strength == "medium":
-            nudge = True
+            strong_signals += 1
         interaction_sig = heuristic_by_category.get("INTERACTION")
         if interaction_sig and interaction_sig.strength == "high":
-            nudge = True
+            strong_signals += 1
 
+        nudge_threshold = 3 if floor >= 4 else 2
+        nudge = strong_signals >= nudge_threshold
         bracket = min(ceiling, floor + 1) if nudge else floor
         bracket = max(floor, min(bracket, ceiling))
 

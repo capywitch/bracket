@@ -201,6 +201,10 @@ def test_single_extra_turn_floors_bracket_2() -> None:
 
 
 def test_two_card_combo_via_combo_store(tmp_path: Path) -> None:
+    """A 2-card combo WITHOUT a Commander Spellbook bracket_tag is suggestive, not determinative —
+    floor 3, not 4. The old MV≤3 "early/cheap" heuristic floored every low-MV 2-card combo at 4,
+    which caught casual synergies (Jolly Balloon Man + Village Bell-Ringer, Breath of Fury +
+    Éowyn) that aren't cEDH win-cons. Authoritative tags (ruthless/powerful) still floor 4."""
     cmd = make_card("Cmdr", oracle_id="cmd-oid", type_line="Legendary Creature — Elf")
     piece_a = make_card("Combo Piece A", oracle_id="combo-a")
     piece_b = make_card("Combo Piece B", oracle_id="combo-b")
@@ -225,7 +229,7 @@ def test_two_card_combo_via_combo_store(tmp_path: Path) -> None:
     finally:
         combo_store.close()
 
-    assert assessment.minimum_bracket >= 4
+    assert assessment.minimum_bracket == 3
     assert any(s.category == "TWO_CARD_COMBO" for s in assessment.official_signals)
 
 
