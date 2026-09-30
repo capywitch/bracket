@@ -7,12 +7,19 @@ import { useActionState } from "react";
 // Mock do React's useActionState and Next's form actions
 // Como o DeckAnalyzeForm usa useActionState, precisamos mocká-lo para testes simples de renderização
 vi.mock("react", async (importOriginal) => {
-  const actual = await importOriginal();
+  const actual = await importOriginal<typeof import("react")>();
   return {
     ...actual,
     useActionState: vi.fn(),
   };
 });
+
+// app/actions.ts puxa lib/api.ts (`import "server-only"`), que explode no jsdom —
+// o componente só usa a referência da action como argumento de useActionState,
+// então o stub basta pra isolar o teste de renderização do lado servidor.
+vi.mock("@/app/actions", () => ({
+  analyzeDeckAction: vi.fn(),
+}));
 
 test("renderiza sinais com source_type 'data' sem quebrar", () => {
   const mockResponse: AnalyzeResponse = {

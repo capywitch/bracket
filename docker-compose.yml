@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: web/Dockerfile
+      secrets:
+        - npm_token
     expose:
       - "3000"
     restart: unless-stopped
@@ -33,3 +35,10 @@ volumes:
     name: mtg_data_vol
   mtg_card_image_cache:
     name: mtg_card_image_cache_vol
+
+secrets:
+  # Token do GitHub Packages (read:packages) para instalar @capywitch/ui no
+  # build da imagem web. No Coolify, defina via "Build Secrets" apontando
+  # pra um arquivo/variável — NUNCA como ENV normal (viraria ARG no layer).
+  npm_token:
+    environment: NPM_TOKEN

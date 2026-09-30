@@ -153,8 +153,8 @@ export default function ComoFuncionaPage() {
           <strong className="text-fg">100 cartas</strong> (99 + 1 comandante),
           em modo <strong className="text-fg">singleton</strong>: nenhum nome
           repetido, exceto terrenos básicos. O comandante precisa ser uma
-          criatura lendária (ou uma carta que diga explicitamente "pode ser seu
-          comandante"), e toda carta do deck precisa ter identidade de cor{" "}
+          criatura lendária (ou uma carta que diga explicitamente &ldquo;pode ser seu
+          comandante&rdquo;), e toda carta do deck precisa ter identidade de cor{" "}
           <strong className="text-fg">dentro</strong> da identidade do
           comandante. Cada jogador começa com{" "}
           <strong className="text-fg">40 pontos de vida</strong>.
@@ -251,7 +251,7 @@ export default function ComoFuncionaPage() {
               Multiplicam o número de land drops, ativações e ataques do jogador.
               <br/><strong className="text-fg mt-1 block">Regra do Piso:</strong> 
               Se o efeito é repetível/encadeável (um permanente, ou um feitiço com texto do tipo 
-              "sempre que"/"no início de"), o piso da estimativa vai pra pelo menos o bracket 4; 
+              &ldquo;sempre que&rdquo;/&ldquo;no início de&rdquo;), o piso da estimativa vai pra pelo menos o bracket 4; 
               se é um feitiço avulso, de uso único, o piso é pelo menos o bracket 2.
             </p>
           </div>

@@ -1,25 +1,5 @@
 @import "tailwindcss";
-
-@theme {
-  /* Página no tom mais escuro, cards num tom claramente mais claro por cima —
-     antes estava invertido (surface mais escuro que bg) e os cards quase
-     desapareciam no fundo. */
-  --color-bg: #10162c;
-  --color-surface: #1e2650;
-  --color-accent-primary: #ff007f;
-  --color-accent-secondary: #00ffff;
-  --color-fg: #ffffff;
-  /* Texto secundário como cor sólida (não opacidade de branco), pra manter
-     contraste previsível em qualquer fundo — opacidade baixa (/50, /60)
-     lavava demais o texto. */
-  --color-muted: #c7cbe0;
-  --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
-}
-
-body {
-  background-color: var(--color-bg);
-  color: var(--color-fg);
-}
+@import "@capywitch/ui/theme.css";
 
 /* "Etiqueta": contorno grosso branco + preenchimento em degradê, inspirado em
    https://gigas.jwalves.com/notas/pequenas-etiquetas/ — stroke desenhado
