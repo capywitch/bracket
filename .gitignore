@@ -19,8 +19,8 @@ data/rules/*.txt
 data/decks/
 data/guides/
 data/inventory.csv
-data/*.db
-data/*.sqlite
+data/**/*.db
+data/**/*.sqlite
 data/cache/
 !data/scryfall/.gitkeep
 !data/rules/.gitkeep
