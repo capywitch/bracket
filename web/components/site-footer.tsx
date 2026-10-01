@@ -6,12 +6,10 @@ import {
 /** Rodapé global: sobre o site, afiliação TCGRP, repositório e créditos de dados. */
 export function SiteFooter() {
   return (
-    <CapywitchSiteFooter>
-      <p>
-        <span className="font-semibold text-fg">Meus Brackets</span> é uma ferramenta da{" "}
-        <FooterLink href="https://tcgrp.com.br">comunidade TCGRP</FooterLink> pra estimar o
-        bracket de decks de Commander.
-      </p>
+    <CapywitchSiteFooter
+      title="Meus Brackets"
+      description="pra estimar o bracket de decks de Commander"
+    >
       <p>
         Projeto{" "}
         <FooterLink href="https://github.com/capywitch/bracket">open source</FooterLink>,
