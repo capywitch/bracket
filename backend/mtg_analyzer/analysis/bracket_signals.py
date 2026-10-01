@@ -36,18 +36,32 @@ _RE_TUTOR_NARROW_TYPE = re.compile(
 
 #: Commander Spellbook's own per-combo classification (`bracketTag` on `Combo`, parsed in
 #: `models/combo.py`) mapped to the bracket number it implies — see
-#: https://commanderspellbook.com/syntax-guide/#bracket. `None` (banned/unrecognized) means
-#: "don't use this to set a floor" — `banned` combos use a card illegal in Commander, which
-#: shouldn't appear in a legal decklist anyway. Keys are lowercase; lookups normalize the raw
-#: tag before matching, since the API's casing isn't pinned by a local fixture.
+#: https://commanderspellbook.com/syntax-guide/#bracket. The API returns this field as a
+#: single-letter short code (confirmed live: `R`/`P`/`S`/`O`/`C`/`E`/`B`), not the full tag
+#: name — both are accepted here so a future API change to full names keeps working too.
+#: `None` (banned/unrecognized) means "don't use this to set a floor" — `banned` combos use
+#: a card illegal in Commander, which shouldn't appear in a legal decklist anyway. Keys are
+#: lowercase; lookups normalize the raw tag before matching.
 _BRACKET_TAG_FLOOR: dict[str, int | None] = {
-    "ruthless": 4,
-    "powerful": 3,
-    "spicy": 3,
-    "oddball": 2,
-    "core": 2,
-    "exhibition": 1,
-    "banned": None,
+    "r": 4, "ruthless": 4,
+    "p": 3, "powerful": 3,
+    "s": 3, "spicy": 3,
+    "o": 2, "oddball": 2,
+    "c": 2, "core": 2,
+    "e": 1, "exhibition": 1,
+    "b": None, "banned": None,
+}
+
+#: Full display name for a (possibly single-letter) `_BRACKET_TAG_FLOOR` key — used only for
+#: the human-readable evidence description, never for the floor lookup itself.
+_BRACKET_TAG_LABEL: dict[str, str] = {
+    "r": "ruthless", "ruthless": "ruthless",
+    "p": "powerful", "powerful": "powerful",
+    "s": "spicy", "spicy": "spicy",
+    "o": "oddball", "oddball": "oddball",
+    "c": "core", "core": "core",
+    "e": "exhibition", "exhibition": "exhibition",
+    "b": "banned", "banned": "banned",
 }
 
 _RE_REMOVAL = re.compile(
@@ -144,7 +158,7 @@ def combo_signal(deck: Deck, ruleset, combo_store: ComboStore | None) -> Signal 
         tag_floor = _BRACKET_TAG_FLOOR.get(tag)
         if tag_floor is not None:
             max_tag_floor = tag_floor if max_tag_floor is None else max(max_tag_floor, tag_floor)
-            extra_note = f" (Commander Spellbook bracket tag: {tag})"
+            extra_note = f" (Commander Spellbook bracket tag: {_BRACKET_TAG_LABEL.get(tag, tag)})"
         elif is_early_cheap:
             # No usable tag (unrecognized/missing/banned) — fall back to the MV≤3 heuristic.
             extra_note = " (both pieces cheap/early, mana value ≤ 3 — heuristic threshold)"

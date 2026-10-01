@@ -920,3 +920,23 @@ Four-stage funnel (full detail in the **`mtg-data-ecosystem`** skill):
     missing `eslint.config.js`, pre-existing).
   - **192 backend tests passing, ruff + mypy clean** (new `SIM102` nits on lines this change didn't
     touch are pre-existing style debt, left as-is).
+
+- **2026-10-01** — **Bug fix: `combo.bracket_tag` lookup never matched a live API response.**
+  Found via manual trace of a real decklist's combos: `CommanderSpellbookClient.find_my_combos`
+  returns `bracketTag` as the **single-letter short code** documented at
+  https://commanderspellbook.com/syntax-guide/#bracket (`R`/`P`/`S`/`O`/`C`/`E`/`B`), not the full
+  tag name — confirmed live against the API. `bracket_signals._BRACKET_TAG_FLOOR` only had full
+  lowercase names (`"ruthless"`, `"spicy"`, …) as keys, so `.get(tag)` was `None` for every
+  real-world combo and the function silently fell through to the MV≤3/generic-floor-3 fallback
+  path instead of using the Spellbook's own classification — the per-tag floor logic (`Ruthless`→4,
+  `Powerful`/`Spicy`→3, `Oddball`/`Core`→2, `Exhibition`→1) had never actually fired in production.
+  Fixed `_BRACKET_TAG_FLOOR` to accept both the short code and the full name as keys; added
+  `_BRACKET_TAG_LABEL` (short code → full name) so the evidence description shown to the user still
+  reads e.g. "bracket tag: spicy" instead of the opaque single letter — the frontend's
+  `BRACKET_TAG_DISPLAY` i18n map (`web/lib/i18n/templates.ts`) already expected full names, so no
+  frontend change was needed. Re-verified against a real decklist: 10 cached combos previously fell
+  back to generic floor 3 for all of them; now 8 correctly resolve to `spicy` (floor 3) and 2 to
+  `exhibition` (floor 1) — same final bracket in that case, but now via the correct code path.
+  25 combo-related tests + full suite still green, ruff clean. `web/app/como-funciona/page.tsx`
+  updated in the same pass (combos-without-tag copy, and the heuristic nudge threshold text, to
+  match `engine.py`'s real 2-of-3/3-of-3 nudge logic instead of the old "any one signal" wording).

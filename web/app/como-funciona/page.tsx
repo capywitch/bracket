@@ -237,9 +237,8 @@ export default function ComoFuncionaPage() {
               <br/><strong className="text-fg mt-1 block">Regra do Piso:</strong> 
               Usa a bracket tag que o Commander Spellbook atribui ao combo quando ela existe: 
               piso 4 para Ruthless, piso 3 para Powerful/Spicy, piso 2 para Oddball/Core, 
-              piso 1 para Exhibition. Sem essa classificação, caímos num heurístico próprio: 
-              combo de duas cartas com ambas custando até 3 de mana resulta em piso pelo menos 4; 
-              qualquer outro combo completo, piso pelo menos 3.
+              piso 1 para Exhibition. Sem essa classificação (combo sem tag reconhecida), 
+              o piso mínimo vai pro bracket 3, independente do custo de mana das peças envolvidas.
             </p>
           </div>
 
@@ -276,14 +275,17 @@ export default function ComoFuncionaPage() {
               (como a aceleração de mana muito acima da curva normal, ex.: <CardNameList names={["Sol Ring", "Mana Crypt", "Ancient Tomb"]} />).
               <br/><strong className="text-fg mt-1 block">Regras de Teto e Ajuste:</strong> 
               O teto é sempre pelo menos o bracket 3, ou piso + 1 quando o piso já passou de 2 (limitado ao bracket 5).
-              A estimativa final sobe 1 bracket acima do piso (sem nunca ultrapassar o teto) se atingir pelo menos <strong>um</strong> dos seguintes gatilhos heurísticos de consistência:
+              A estimativa final sobe 1 bracket acima do piso (sem nunca ultrapassar o teto) se o número de
+              gatilhos fortes abaixo atingir um limiar: <strong className="text-fg">2 gatilhos</strong> quando
+              o piso calculado é 3 ou menos, ou <strong className="text-fg">3 gatilhos</strong> quando o piso
+              já é 4 ou mais (cada gatilho conta no máximo 1 vez, mesmo que o deck exceda o limite listado):
             </p>
             <ul className="mt-3 list-disc pl-5 space-y-2 text-sm text-muted">
               <li>
-                <strong className="text-fg font-medium">Interação Alta (≥ 15%):</strong> Baseada nos templates clássicos da comunidade (como <em>The Command Zone</em>), que recomendam 10 peças de interação (remoção, proteção, anulações) para rodar de forma eficiente. Em um deck padrão de 65 cartas não-terreno, 10 peças equivalem a cerca de 15%.
+                <strong className="text-fg font-medium">Interação Alta (≥ 15% das não-terrenos):</strong> Baseada nos templates clássicos da comunidade (como <em>The Command Zone</em>), que recomendam 10 peças de interação (remoção, proteção, anulações) para rodar de forma eficiente. Em um deck padrão de 65 cartas não-terreno, 10 peças equivalem a cerca de 15%.
               </li>
               <li>
-                <strong className="text-fg font-medium">Mana Rápida Curada (≥ 2 peças):</strong> Presença de 2 ou mais aceleradores explosivos de uma lista curada (como Sol Ring, Mana Crypt, Mox Diamond, etc), indicando vantagem explosiva de curva nos primeiros turnos.
+                <strong className="text-fg font-medium">Mana Rápida Curada (≥ 3 peças):</strong> Presença de 3 ou mais aceleradores explosivos de uma lista curada (como Sol Ring, Mana Crypt, Mox Diamond, etc), indicando vantagem explosiva de curva nos primeiros turnos.
               </li>
               <li>
                 <strong className="text-fg font-medium">Tutor Amplo (≥ 1 peça):</strong> Presença de qualquer tutor irrestrito (que não limita a busca a um subtipo específico como Terreno ou Criatura), indicando consistência para buscar a resposta exata ou peça de combo na hora certa.
