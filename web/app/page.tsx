@@ -24,7 +24,7 @@ export default async function HomePage() {
     .slice(0, 4);
 
   return (
-    <main className="mx-auto flex max-w-5xl flex-col gap-14 px-6 py-16">
+    <main className="mx-auto flex max-w-7xl flex-col gap-14 px-6 py-16">
       <HeroBrand />
 
       <DeckAnalyzeForm offline={backendOffline} />

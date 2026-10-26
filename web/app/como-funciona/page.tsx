@@ -129,7 +129,7 @@ export default function ComoFuncionaPage() {
   const rulesVersion = getRulesVersion();
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-16">
+    <main className="mx-auto max-w-7xl px-6 py-16">
       <h1 className="text-3xl font-semibold text-fg">
         Como calculamos o Bracket
       </h1>

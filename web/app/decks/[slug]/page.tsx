@@ -23,7 +23,7 @@ export default async function DeckReportPage({
   }
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-16">
+    <main className="mx-auto max-w-7xl px-6 py-16">
       <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-sm text-muted">
         <Link href="/decks" className="text-accent-secondary hover:underline">
           Decks

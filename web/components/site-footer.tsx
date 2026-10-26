@@ -19,7 +19,7 @@ export function SiteFooter() {
         </FooterLink>
         .
       </p>
-      <p className="border-t border-white/10 pt-3 text-xs">
+      <p className="border-t border-fg/10 pt-3 text-xs">
         Imagens e dados de cartas © Wizards of the Coast, via{" "}
         <FooterLink href="https://scryfall.com">Scryfall</FooterLink>. Fan content não oficial,
         sem afiliação com a Wizards of the Coast.
