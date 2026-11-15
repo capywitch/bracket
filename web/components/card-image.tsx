@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CardPrices } from "@/components/card-prices";
 import { CardZoomDialog, ZoomableCardImage } from "@capywitch/ui/components/ZoomableCardImage";
 
 // Proxy local (`app/api/card-image`) que busca no Scryfall e cacheia em disco —
@@ -24,6 +25,7 @@ export function CardImage({
       src={scryfallImageUrl(name)}
       alt={name}
       loading="lazy"
+      caption={<CardPrices name={name} />}
       imgClassName={`aspect-5/7 w-full rounded-xl overflow-hidden object-cover ${className ?? ""}`}
     />
   );
@@ -49,7 +51,7 @@ export function CardNameLink({ name, className }: { name: string; className?: st
         {name}
       </button>
 
-      {open ? <CardZoomDialog src={src} alt={name} onClose={() => setOpen(false)} /> : null}
+      {open ? <CardZoomDialog src={src} alt={name} caption={<CardPrices name={name} />} onClose={() => setOpen(false)} /> : null}
     </>
   );
 }

@@ -13,6 +13,8 @@ services:
     environment:
       - MTG_API_URL=${API_URL:-http://api_bracket:8000}
       - MTG_API_KEY=${API_KEY}
+      # Oracle (tcgrp.oracle): preços de referência no modal da carta. Vazio = sem preços.
+      - ORACLE_API_URL=${ORACLE_API_URL:-}
     volumes:
       - mtg_card_image_cache:/app/web/.cache/card-images
     depends_on:
